@@ -1,25 +1,14 @@
 {
-  "CONTRACT_ADDRESS": "0xe635Bd48F69276D6f52cc2e577E5DdecCf16B79c",
+  "CONTRACT_ADDRESS": "0x9f85344a2985E7d288b11EB6E2BF1b86E7646162",
   "SCAN_LINK": "https://etherscan.io/address/0xe635Bd48F69276D6f52cc2e577E5DdecCf16B79c",
   "NETWORK": {
-    "NAME": "Ethereum",
+    "NAME": "Ethereum Rinkeby",
     "SYMBOL": "ETH",
-    "ID": 1
+    "ID": 4
   },
-  "NETWORK_ID_WALLET" :1,
-  "NFT_NAME": "Aceminers NFT",
-  "SYMBOL": "AM",
-  "MAX_SUPPLY": 1500 ,
-  "WEI_COST_OG": 100000000000000000,
-  "DISPLAY_COST_OG": 0.1,
-  "WEI_COST_WL": 180000000000000000,
-  "DISPLAY_COST_WL": 0.18,
-  "WEI_COST_PU": 220000000000000000,
-  "DISPLAY_COST_PU": 0.22,
-  "MAX_LIMIT_OG": 2,
-  "MAX_LIMIT_WL": 1,
-  "GAS_LIMIT": 285000,
-  "MARKETPLACE": "Opeansea",
-  "MARKETPLACE_LINK": "https://opensea.io/collection/mutant-age-camel-club",
-  "SHOW_BACKGROUND": true
+  "NETWORK_ID_WALLET" :4,
+  "NFT_NAME": "8OD",
+  "SYMBOL": "8OD-C1",
+  "MAX_SUPPLY": 1000 ,
+  "GAS_LIMIT": 285000
 }
