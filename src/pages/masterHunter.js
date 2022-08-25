@@ -1,5 +1,5 @@
 const masterHunter = [
-"0x385061C3FBEe86BD8E9e65e9c6A1B6b8F9C25C3F",  
+"0xF7a43B0Fb2C5d6700a63659b248b3921546F901A",  
 ];
 
 export default masterHunter;

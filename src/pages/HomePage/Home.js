@@ -17,9 +17,9 @@ const keccak256 = require('keccak256');
 
 // Master Hunter MerkleTree
 const leafNodes = masterHunter.map(addr => keccak256(addr));
-const merkleTree = new MerkleTree(leafNodes, keccak256, { sortPairs: true });
-const rootHash = merkleTree.getRoot();
-console.log('Master Hunter Merkle Tree\n', merkleTree.toString());
+const merkleTreeMaster = new MerkleTree(leafNodes, keccak256, { sortPairs: true });
+const rootHashMaster = merkleTreeMaster.getRoot();
+console.log('Master Hunter Merkle Tree\n', merkleTreeMaster.toString());
 
 
 // Star Hunter MerkleTree
@@ -178,45 +178,73 @@ function Home() {
 
       // Nft states
       if (currentState == 1) {
-        let totalWLNfts = 200;
-        supply < totalWLNfts && nftMintedByUser != 0 ? setDisable(false) : setDisable(true);
-        const claimingAddress = keccak256(blockchain.account);
-        // `getHexProof` returns the neighbour leaf and all parent nodes hashes that will
-        // be required to derive the Merkle Trees root hash.
-        const hexProof = merkleTree.getHexProof(claimingAddress);
-        setProof(hexProof);
-        let mintWL = merkleTree.verify(hexProof, claimingAddress, rootHash);
-        let mintWLContractMethod = await blockchain.smartContract.methods
-          .isWhitelisted(blockchain.account, hexProof)
-          .call();
-        if (mintWLContractMethod && mintWL) {
-          setCanMintWL(mintWL);
-          setFeedback(`Welcome Whitelist Member, you can mint up to ${nftMintedByUser} NFTs`)
-        } else {
-          setFeedback(`Sorry, your wallet is not on the whitelist`);
+        const walletAddress = "0xa78A8ff1fAbd680FFB4a810d5e8831AA71e18933";
+        console.log(blockchain.account);
+        if (blockchain.account != walletAddress) {
+          
+          setFeedback(`You're not 8OD Member`);
           setDisable(true);
-        }
-      } else if (currentState == 2) {
-        let totalEANfts = 150;
-        supply < totalEANfts && nftMintedByUser != 0 ? setDisable(false) : setDisable(true);
-        const claimingAddress = keccak256(blockchain.account);
-        const hexProof = merkleTreeEarly.getHexProof(claimingAddress);
-        setProof(hexProof);
-        let mintEarly = merkleTreeEarly.verify(hexProof, claimingAddress, rootHashEarly);
-        let mintEAContractMethod = await blockchain.smartContract.methods
-          .isEarlyAccess(blockchain.account, hexProof)
-          .call();
-        if (mintEAContractMethod && mintEarly) {
-          setCanMintEA(mintEarly);
-          setFeedback(`Welcome Early Access Member, you can mint up to ${nftMintedByUser} NFTs`)
         } else {
-          setFeedback(`Sorry, your wallet is not on the Early Access list`);
+          if (nftMintedByUser > 0  ) {
+            setFeedback(`Welcome, you can mint up to ${nftMintedByUser} NFTs per transaction`);
+          } else {
+            setFeedback(`You've Minted all the NFTs`);
+            setDisable(true);
+          }
+        }
+        // Master Hunter
+      } else if (currentState == 2) {
+        const claimingAddress = keccak256(blockchain.account);
+        const hexProof = merkleTreeMaster.getHexProof(claimingAddress);
+        setProof(hexProof);
+        let mintMasterHunter = merkleTreeMaster.verify(hexProof, claimingAddress, rootHashMaster);
+        let mintMHContractMethod = await blockchain.smartContract.methods
+          .isMasterHunter(blockchain.account, hexProof)
+          .call();
+        if (mintMHContractMethod && mintMasterHunter) {
+          setCanMintEA(mintMasterHunter);
+          setFeedback(`Welcome Master Hunter Member, you can mint up to ${nftMintedByUser} NFTs`)
+        } else {
+          setFeedback(`Sorry, your wallet is not on the Master Hunter list`);
           setDisable(true);
         }
       }
+      // Star Hunter
+      else if (currentState == 3) {
+        const claimingAddress = keccak256(blockchain.account);
+        const hexProof = merkleTreeEarly.getHexProof(claimingAddress);
+        setProof(hexProof);
+        let mintStarHunter = merkleTreeEarly.verify(hexProof, claimingAddress, rootHashEarly);
+        let mintSHContractMethod = await blockchain.smartContract.methods
+          .isStarHunter(blockchain.account, hexProof)
+          .call();
+        if (mintSHContractMethod && mintStarHunter) {
+          setCanMintEA(mintStarHunter);
+          setFeedback(`Welcome Star Hunter Member, you can mint up to ${nftMintedByUser} NFTs`)
+        } else {
+          setFeedback(`Sorry, your wallet is not on the Star Hunter list`);
+          setDisable(true);
+        }
+      } 
+      // Hunter
+      else if (currentState == 4) {
+        const claimingAddress = keccak256(blockchain.account);
+        const hexProof = merkleTreeHunter.getHexProof(claimingAddress);
+        setProof(hexProof);
+        let mintHunter = merkleTreeHunter.verify(hexProof, claimingAddress, rootHashHunter);
+        let mintHContractMethod = await blockchain.smartContract.methods
+          .isHunter(blockchain.account, hexProof)
+          .call();
+        if (mintHContractMethod && mintHunter) {
+          setCanMintEA(mintHunter);
+          setFeedback(`Welcome Hunter Member, you can mint up to ${nftMintedByUser} NFTs`)
+        } else {
+          setFeedback(`Sorry, your wallet is not on the Hunter list`);
+          setDisable(true);
+        }
+      }
+      // Public
       else {
-        let totalPublic = 1300;
-        supply < totalPublic ? setDisable(false) : setDisable(true);
         setFeedback(`Welcome, you can mint up to ${nftMintedByUser} NFTs per transaction`)
       }
     }
