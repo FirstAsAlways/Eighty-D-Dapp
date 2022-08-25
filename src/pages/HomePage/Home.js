@@ -29,7 +29,7 @@ const rootHashEarly = merkleTreeEarly.getRoot();
 console.log('Star Hunter Merkle Tree\n', merkleTreeEarly.toString());
 
 // Hunter  MerkleTree
-const leafNodesHunter= hunter.map(addr => keccak256(addr));
+const leafNodesHunter = hunter.map(addr => keccak256(addr));
 const merkleTreeHunter = new MerkleTree(leafNodesHunter, keccak256, { sortPairs: true });
 const rootHashHunter = merkleTreeHunter.getRoot();
 console.log('Hunter Merkle Tree\n', merkleTreeHunter.toString());
@@ -133,7 +133,7 @@ function Home() {
     }
     setMintAmount(newMintAmount);
     setDisplayCost(
-      parseFloat(nftCost * newMintAmount).toFixed(2)
+      parseFloat(nftCost * newMintAmount).toFixed(3 )
     );
   };
 
@@ -143,7 +143,7 @@ function Home() {
       ? (newMintAmount = max)
       : newMintAmount;
     setDisplayCost(
-      parseFloat(nftCost * newMintAmount).toFixed(2)
+      parseFloat(nftCost * newMintAmount).toFixed(3)
     );
     setMintAmount(newMintAmount);
   };
@@ -152,7 +152,7 @@ function Home() {
     setMintAmount(max);
 
     setDisplayCost(
-      parseFloat(nftCost * max).toFixed(2)
+      parseFloat(nftCost * max).toFixed(3)
     );
 
   };
@@ -254,33 +254,61 @@ function Home() {
       setDisplayCost(0.00);
       setMax(0);
     }
-    else if (currentState == 2) {
-      setStatusAlert("EARLY ACCESS IS NOW LIVE!");
-      let earlyAccessCost = await contract.methods
-        .costEarlyAccess()
+    else if (currentState == 1) {
+      let teamCost = await contract.methods
+        .costFreeMint()
         .call();
-      setDisplayCost(web3.utils.fromWei(earlyAccessCost));
-      setNftCost(web3.utils.fromWei(earlyAccessCost));
-      setFeedback("Have you got the Early Access?");
+      setDisplayCost(web3.utils.fromWei(teamCost));
+      setNftCost(web3.utils.fromWei(teamCost));
+      setStatusAlert("8od Team + Galleries ");
+      setFeedback("Are you 8OD Member?");
+
+      let wlMax = await contract.methods
+        .maxMintAmountTeam()
+        .call();
+      setMax(wlMax);
+    }
+    else if (currentState == 2) {
+      let masterHunterCost = await contract.methods
+        .costWL()
+        .call();
+      setDisplayCost(web3.utils.fromWei(masterHunterCost));
+      setNftCost(web3.utils.fromWei(masterHunterCost));
+      setStatusAlert("MASTER HUNTER IS NOW LIVE!");
+      setFeedback("Are you MASTER HUNTER Member?");
+
+      let wlMax = await contract.methods
+        .maxMintAmountMasterHunter()
+        .call();
+      setMax(wlMax);
+    }
+    else if (currentState == 3) {
+      setStatusAlert("STAR HUNTER IS NOW LIVE!");
+      let starHunterCost = await contract.methods
+        .costWL()
+        .call();
+      setDisplayCost(web3.utils.fromWei(starHunterCost));
+      setNftCost(web3.utils.fromWei(starHunterCost));
+      setFeedback("Are you STAR HUNTER Member?");
 
       let earlyMax = await contract.methods
-        .maxMintAmountEarlyAccess()
+        .maxMintAmountStarHunter()
         .call();
       setMax(earlyMax);
     }
-    else if (currentState == 1) {
-      let wlCost = await contract.methods
+    else if (currentState == 4) {
+      setStatusAlert(" HUNTER IS NOW LIVE!");
+      let hunterCost = await contract.methods
         .costWL()
         .call();
-      setDisplayCost(web3.utils.fromWei(wlCost));
-      setNftCost(web3.utils.fromWei(wlCost));
-      setStatusAlert("WHITELIST IS NOW LIVE!");
-      setFeedback("Are you Whitelisted Member?");
+      setDisplayCost(web3.utils.fromWei(hunterCost));
+      setNftCost(web3.utils.fromWei(hunterCost));
+      setFeedback("Are you HUNTER Member?");
 
-      let wlMax = await contract.methods
-        .maxMintAmountWL()
+      let earlyMax = await contract.methods
+        .maxMintAmountHunter()
         .call();
-      setMax(wlMax);
+      setMax(earlyMax);
     }
     else {
       let puCost = await contract.methods
@@ -324,7 +352,9 @@ function Home() {
     <>
 
       {loading && <Loader />}
-
+      <s.Image src={"config/images/logo.png"} wid={"15"} style={{
+        "marginTop": "25px"
+      }} />
       <s.FlexContainer jc={"center"} ai={"center"} fd={"row"}
       >
         <s.Mint>
@@ -438,7 +468,7 @@ function Home() {
               {/* ) : ("")} */}
             </>
           )}
-           <s.SpacerLarge />
+          <s.SpacerLarge />
           <s.SpacerLarge />
           {blockchain.errorMsg !== "" ? (
             <s.connectButton
