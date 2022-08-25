@@ -145,18 +145,8 @@ export const Mint = styled.div`
 
   @media screen and (max-width: 480px) {
     width: 95%;
-    margin-top:0vh;
+    margin-top:10vh;
     padding: 20px 20px;
-  }
-`;
-
-export const CatDiv = styled.div`
-  display: block;
-  width: 45%;
-
-  @media screen and (max-width: 768px) {
-    width: 100%;
-    margin-top: 10px !important;
   }
 `;
 
@@ -168,7 +158,7 @@ export const Image = styled.img`
   display: block;
   margin: 0 auto;
   @media (max-width: 767px) {
-    width: 100%;
+    width: 50%;
     margin-top: 0;
   }
 `;
