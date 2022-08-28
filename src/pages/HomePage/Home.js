@@ -7,6 +7,11 @@ import masterHunter from "../masterHunter";
 import starHunter from "../starHunter";
 import hunter from "../hunter";
 import Loader from "../../components/Loader/loader";
+import PublicCountdown from "../../components/Countdown/publicCountdown";
+import TeamCountdown from "../../components/Countdown/teamCountdown";
+import MasterHunterCountdown from "../../components/Countdown/masterHunterCountdown";
+import StarHunterCountdown from "../../components/Countdown/starHunterCountdown";
+import HunterCountdown from "../../components/Countdown/hunterCountdown";
 // Add this import line at the top
 const { createAlchemyWeb3 } = require("@alch/alchemy-web3");
 const web3 = createAlchemyWeb3("https://eth-rinkeby.alchemyapi.io/v2/nZn20L-4EPgloJesoSx35hnTO8cK6c7o");
@@ -87,13 +92,6 @@ function Home() {
     setClaimingNft(true);
     setLoading(true);
 
-    // const estGas = await blockchain.smartContract.methods.
-    // mint(mintAmount,proof).estimateGas({
-    //   from: blockchain.account,
-    //   to: CONFIG.CONTRACT_ADDRESS,
-    // });
-    // console.log({ estGas });
-
     blockchain.smartContract.methods
       .mint(mintAmount, proof)
       .send({
@@ -133,7 +131,7 @@ function Home() {
     }
     setMintAmount(newMintAmount);
     setDisplayCost(
-      parseFloat(nftCost * newMintAmount).toFixed(3 )
+      parseFloat(nftCost * newMintAmount).toFixed(3)
     );
   };
 
@@ -181,11 +179,11 @@ function Home() {
         const walletAddress = "0xa78A8ff1fAbd680FFB4a810d5e8831AA71e18933";
         console.log(blockchain.account);
         if (blockchain.account != walletAddress) {
-          
+
           setFeedback(`You're not 8OD Member`);
           setDisable(true);
         } else {
-          if (nftMintedByUser > 0  ) {
+          if (nftMintedByUser > 0) {
             setFeedback(`Welcome, you can mint up to ${nftMintedByUser} NFTs per transaction`);
           } else {
             setFeedback(`You've Minted all the NFTs`);
@@ -225,7 +223,7 @@ function Home() {
           setFeedback(`Sorry, your wallet is not on the Star Hunter list`);
           setDisable(true);
         }
-      } 
+      }
       // Hunter
       else if (currentState == 4) {
         const claimingAddress = keccak256(blockchain.account);
@@ -304,7 +302,6 @@ function Home() {
       setNftCost(web3.utils.fromWei(masterHunterCost));
       setStatusAlert("MASTER HUNTER IS NOW LIVE!");
       setFeedback("Are you MASTER HUNTER Member?");
-
       let wlMax = await contract.methods
         .maxMintAmountMasterHunter()
         .call();
@@ -318,7 +315,6 @@ function Home() {
       setDisplayCost(web3.utils.fromWei(starHunterCost));
       setNftCost(web3.utils.fromWei(starHunterCost));
       setFeedback("Are you STAR HUNTER Member?");
-
       let earlyMax = await contract.methods
         .maxMintAmountStarHunter()
         .call();
@@ -332,7 +328,6 @@ function Home() {
       setDisplayCost(web3.utils.fromWei(hunterCost));
       setNftCost(web3.utils.fromWei(hunterCost));
       setFeedback("Are you HUNTER Member?");
-
       let earlyMax = await contract.methods
         .maxMintAmountHunter()
         .call();
@@ -376,6 +371,108 @@ function Home() {
     getData();
   }, [blockchain.account]);
 
+
+  // Countdown Timer Team
+  let countDownTeam = new Date("Aug 31, 2022 00:00:00 GMT +5:00 ").getTime();
+  let nowTeam  = new Date().getTime();
+  let timeleftTeam  = countDownTeam  - nowTeam;
+  const [daysTeam, setDaysTeam ] = useState();
+  const [hoursTeam , setHourTeam ] = useState();
+  const [minutesTeam , setMintTeam ] = useState();
+  const [secondsTeam , setSecTeam ] = useState();
+  useEffect(() => {
+    const intervalPublic = setInterval(() => {
+      setDaysTeam(Math.floor(timeleftTeam / (1000 * 60 * 60 * 24)));
+      setHourTeam(
+        Math.floor((timeleftTeam % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))
+      );
+      setMintTeam(Math.floor((timeleftTeam % (1000 * 60 * 60)) / (1000 * 60)));
+      setSecTeam(Math.floor((timeleftTeam % (1000 * 60)) / 1000));
+    }, 1000);
+    return () => clearInterval(intervalPublic);
+  }, [daysTeam, hoursTeam, minutesTeam, secondsTeam]);
+
+    // Countdown Timer Master Hunter
+    let countDownMH = new Date("Sep 01, 2022 00:00:00 GMT +5:00 ").getTime();
+    let nowMH= new Date().getTime();
+    let timeleftMH = countDownMH - nowMH;
+    const [daysMH, setDaysMH] = useState();
+    const [hoursMH, setHourMH] = useState();
+    const [minutesMH, setMintMH] = useState();
+    const [secondsMH, setSecMH] = useState();
+    useEffect(() => {
+      const intervalMH = setInterval(() => {
+        setDaysMH(Math.floor(timeleftMH / (1000 * 60 * 60 * 24)));
+        setHourMH(
+          Math.floor((timeleftMH % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))
+        );
+        setMintMH(Math.floor((timeleftMH % (1000 * 60 * 60)) / (1000 * 60)));
+        setSecMH(Math.floor((timeleftMH % (1000 * 60)) / 1000));
+      }, 1000);
+      return () => clearInterval(intervalMH);
+    }, [daysMH, hoursMH, minutesMH, secondsMH]);
+
+
+    // Countdown Timer Star Hunter
+    let countDownSH = new Date("Sep 02, 2022 00:00:00 GMT +5:00 ").getTime();
+    let nowSH= new Date().getTime();
+    let timeleftSH = countDownSH - nowSH;
+    const [daysSH, setDaysSH] = useState();
+    const [hoursSH, setHourSH] = useState();
+    const [minutesSH, setMintSH] = useState();
+    const [secondsSH, setSecSH] = useState();
+    useEffect(() => {
+      const intervalSH = setInterval(() => {
+        setDaysSH(Math.floor(timeleftSH / (1000 * 60 * 60 * 24)));
+        setHourSH(
+          Math.floor((timeleftSH % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))
+        );
+        setMintSH(Math.floor((timeleftSH % (1000 * 60 * 60)) / (1000 * 60)));
+        setSecSH(Math.floor((timeleftSH % (1000 * 60)) / 1000));
+      }, 1000);
+      return () => clearInterval(intervalSH);
+    }, [daysSH, hoursSH, minutesSH, secondsSH]);
+
+   // Countdown Timer Hunter
+   let countDownH = new Date("Sep 03, 2022 00:00:00 GMT +5:00 ").getTime();
+   let nowH= new Date().getTime();
+   let timeleftH = countDownH - nowH;
+   const [daysH, setDaysH] = useState();
+   const [hoursH, setHourH] = useState();
+   const [minutesH, setMintH] = useState();
+   const [secondsH, setSecH] = useState();
+   useEffect(() => {
+     const intervalH = setInterval(() => {
+       setDaysH(Math.floor(timeleftH / (1000 * 60 * 60 * 24)));
+       setHourH(
+         Math.floor((timeleftH % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))
+       );
+       setMintH(Math.floor((timeleftH % (1000 * 60 * 60)) / (1000 * 60)));
+       setSecH(Math.floor((timeleftH % (1000 * 60)) / 1000));
+     }, 1000);
+     return () => clearInterval(intervalH);
+   }, [daysH, hoursH, minutesH, secondsH]);
+
+  // Countdown Timer Public
+  let countDownPublic = new Date("Sep 04, 2022 00:00:00 GMT +5:00 ").getTime();
+  let nowPublic = new Date().getTime();
+  let timeleftPublic = countDownPublic - nowPublic;
+  const [daysPublic, setDaysPublic] = useState();
+  const [hoursPublic, setHourPublic] = useState();
+  const [minutesPublic, setMintPublic] = useState();
+  const [secondsPublic, setSecPublic] = useState();
+  useEffect(() => {
+    const intervalPublic = setInterval(() => {
+      setDaysPublic(Math.floor(timeleftPublic / (1000 * 60 * 60 * 24)));
+      setHourPublic(
+        Math.floor((timeleftPublic % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))
+      );
+      setMintPublic(Math.floor((timeleftPublic % (1000 * 60 * 60)) / (1000 * 60)));
+      setSecPublic(Math.floor((timeleftPublic % (1000 * 60)) / 1000));
+    }, 1000);
+    return () => clearInterval(intervalPublic);
+  }, [daysPublic, hoursPublic, minutesPublic, secondsPublic]);
+
   return (
     <>
 
@@ -393,7 +490,7 @@ function Home() {
 
             }}
           >
-            {statusAlert}
+            {/* {statusAlert} */}
           </s.TextTitle>
           <s.SpacerSmall />
           <s.SpacerLarge />
@@ -520,6 +617,64 @@ function Home() {
             </s.TextDescription>
           )}
         </s.Mint>
+        <s.Table>
+          <table className="table table-striped ">
+            <thead>
+              <tr>
+                <th scope="col" className="text-white">Group</th>
+                <th scope="col" className="text-white">Status</th>
+                <th scope="col" className="text-white">Mint Start</th>
+              </tr>
+            </thead>
+            <tbody className="table-group-divider">
+              <tr>
+                <td className="text-white">80D Team + Partners</td>
+                <td><s.Status color={state == 1 ? "#25EF09" : "#F70505"} /></td>
+                <td className="text-white">
+                {daysTeam > -1 && hoursTeam > -1 && minutesTeam > -1 && secondsTeam > -1 && (
+                    <TeamCountdown />
+                  )}
+                </td>
+              </tr>
+              <tr>
+                <td className="text-white">Master Hunter</td>
+                <td><s.Status color={state == 2 ? "#25EF09" : "#F70505"} /></td>
+                <td className="text-white">
+                {daysTeam > -1 && hoursTeam > -1 && minutesTeam > -1 && secondsTeam > -1 && (
+                    <MasterHunterCountdown />
+                  )}
+                </td>
+              </tr>
+              <tr>
+                <td className="text-white">Star Hunter</td>
+                <td><s.Status color={state == 3 ? "#25EF09" : "#F70505"} /></td>
+                <td className="text-white">
+                {daysTeam > -1 && hoursTeam > -1 && minutesTeam > -1 && secondsTeam > -1 && (
+                    <StarHunterCountdown />
+                  )}
+                </td>
+              </tr>
+              <tr>
+                <td className="text-white">Hunter</td>
+                <td><s.Status color={state == 4 ? "#25EF09" : "#F70505"} /></td>
+                <td className="text-white">
+                {daysTeam > -1 && hoursTeam > -1 && minutesTeam > -1 && secondsTeam > -1 && (
+                    <HunterCountdown />
+                  )}
+                </td>
+              </tr>
+              <tr>
+                <td className="text-white">Public Sale</td>
+                <td><s.Status color={state == 5 ? "#25EF09" : "#F70505"} /></td>
+                <td className="text-white">
+                  {daysPublic > -1 && hoursPublic  > -1 && minutesPublic  > -1 && secondsPublic  > -1 && (
+                    <PublicCountdown />
+                  )}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </s.Table>
       </s.FlexContainer>
     </>
   );

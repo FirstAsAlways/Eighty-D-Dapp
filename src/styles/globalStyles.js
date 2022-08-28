@@ -124,12 +124,10 @@ export const row = styled.div`
 export const Mint = styled.div`
   padding: 25px 40px;
   border-radius: 25px;
-  width: 40%;
-  margin: 0;
-  position: absolute;
-  top: 55%;
-  -ms-transform: translateY(-50%);
-  transform: translateY(-50%);
+  width: 30%;
+  margin: auto;
+  /* position: absolute;
+  top: 55%; */
   background: rgba(0,0,0,0.5);
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 
@@ -149,6 +147,17 @@ export const Mint = styled.div`
     padding: 20px 20px;
   }
 `;
+
+export const Table = styled.div`
+  display: block;
+  width: 30%;
+  margin: auto;
+  @media screen and (max-width: 768px) {
+    width: 100%;
+    margin-top: 10px !important;
+  }
+`;
+
 
 export const Image = styled.img`
   width: ${({ wid }) => (wid ? wid + "%" : "100%")};
@@ -241,6 +250,14 @@ export const NavIcon = styled.img`
 
 export const NavLink = styled(LinkS)`
   cursor: pointer;
+`;
+
+export const Status = styled.button `
+   height: 25px;
+  width: 25px;
+  border-radius: 50%;
+  display: inline-block;
+  background-color: ${({color}) => (color ? color : "#ffffff")};
 `;
 
 export const StyledRoundButton = styled.button`
