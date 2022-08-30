@@ -126,7 +126,7 @@ export const Mint = styled.div`
   border-radius: 25px;
   width: 30%;
   margin-top: 4vh;
-  margin-right: 4vh;
+  margin-left: 4vh;
   /* position: absolute;
   top: 55%; */
   background: rgba(0,0,153,0.5);
@@ -151,7 +151,7 @@ export const Mint = styled.div`
 
 export const Table = styled.div`
   display: block;
-  width: 10%;
+  width: 20%;
   @media screen and (max-width: 768px) {
     width: 100%;
     margin-top: 10px !important;

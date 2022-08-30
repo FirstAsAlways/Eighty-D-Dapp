@@ -482,7 +482,66 @@ function Home() {
       }} />
       <s.FlexContainer jc={"center"} ai={"center"} fd={"row"}
       >
-      <s.Table></s.Table>
+              <s.Table>
+          <table className="table">
+            <thead>
+              <tr>
+                <th scope="col" className="text-white">Group</th>
+                <th scope="col" className="text-white">Status</th>
+                <th scope="col" className="text-white">Mint Start</th>
+              </tr>
+            </thead>
+            <tbody className="table-group-divider">
+              <tr>
+                <td className="text-white">80D Team + Partners</td>
+                <td><s.Status color={state == 1 ? "#25EF09" : "#F70505"} /></td>
+                <td className="text-white text-center">
+                {state != 0 && daysTeam > -1 && hoursTeam > -1 && minutesTeam > -1 && secondsTeam > -1 ? (
+                    <TeamCountdown />
+                  ): "---"}
+                  
+                </td>
+              </tr>
+              <tr>
+                <td className="text-white">Master Hunter</td>
+                <td><s.Status color={state == 2 ? "#25EF09" : "#F70505"} /></td>
+                <td className="text-white  text-center">
+                {state != 0 && daysTeam > -1 && hoursTeam > -1 && minutesTeam > -1 && secondsTeam > -1 ? (
+                    <MasterHunterCountdown />
+                  ): "---"}
+                </td>
+              </tr>
+              <tr>
+                <td className="text-white">Star Hunter</td>
+                <td><s.Status color={state == 3 ? "#25EF09" : "#F70505"} /></td>
+                <td className="text-white  text-center">
+                {state != 0 && daysTeam > -1 && hoursTeam > -1 && minutesTeam > -1 && secondsTeam > -1 ? (
+                    <StarHunterCountdown />
+                  ): "---"}
+                </td>
+              </tr>
+              <tr>
+                <td className="text-white">Hunter</td>
+                <td><s.Status color={state == 4 ? "#25EF09" : "#F70505"} /></td>
+                <td className="text-white  text-center">
+                {state != 0 && daysTeam > -1 && hoursTeam > -1 && minutesTeam > -1 && secondsTeam > -1 ? (
+                    <HunterCountdown />
+                  ): "---"}
+                </td>
+              </tr>
+              <tr>
+                <td className="text-white">Public Sale</td>
+                <td><s.Status color={state == 5 ? "#25EF09" : "#F70505"} /></td>
+                <td className="text-white  text-center">
+                  {state != 0 && daysPublic > -1 && hoursPublic  > -1 && minutesPublic  > -1 && secondsPublic  > -1 ? (
+                    <PublicCountdown />
+                  ): "---"}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </s.Table>
+
         <s.Mint>
           <s.TextTitle
             size={3.0}
@@ -618,65 +677,8 @@ function Home() {
             </s.TextDescription>
           )}
         </s.Mint>
-        <s.Table>
-          <table className="table table-bordered ">
-            <thead>
-              <tr>
-                <th scope="col" className="text-white">Group</th>
-                <th scope="col" className="text-white">Status</th>
-                <th scope="col" className="text-white">Mint Start</th>
-              </tr>
-            </thead>
-            <tbody className="table-group-divider">
-              <tr>
-                <td className="text-white">80D Team + Partners</td>
-                <td><s.Status color={state == 1 ? "#25EF09" : "#F70505"} /></td>
-                <td className="text-white text-center">
-                {state != 0 && daysTeam > -1 && hoursTeam > -1 && minutesTeam > -1 && secondsTeam > -1 ? (
-                    <TeamCountdown />
-                  ): "---"}
-                  
-                </td>
-              </tr>
-              <tr>
-                <td className="text-white">Master Hunter</td>
-                <td><s.Status color={state == 2 ? "#25EF09" : "#F70505"} /></td>
-                <td className="text-white">
-                {state != 0 && daysTeam > -1 && hoursTeam > -1 && minutesTeam > -1 && secondsTeam > -1 ? (
-                    <MasterHunterCountdown />
-                  ): "---"}
-                </td>
-              </tr>
-              <tr>
-                <td className="text-white">Star Hunter</td>
-                <td><s.Status color={state == 3 ? "#25EF09" : "#F70505"} /></td>
-                <td className="text-white">
-                {state != 0 && daysTeam > -1 && hoursTeam > -1 && minutesTeam > -1 && secondsTeam > -1 ? (
-                    <StarHunterCountdown />
-                  ): "---"}
-                </td>
-              </tr>
-              <tr>
-                <td className="text-white">Hunter</td>
-                <td><s.Status color={state == 4 ? "#25EF09" : "#F70505"} /></td>
-                <td className="text-white">
-                {state != 0 && daysTeam > -1 && hoursTeam > -1 && minutesTeam > -1 && secondsTeam > -1 ? (
-                    <HunterCountdown />
-                  ): "---"}
-                </td>
-              </tr>
-              <tr>
-                <td className="text-white">Public Sale</td>
-                <td><s.Status color={state == 5 ? "#25EF09" : "#F70505"} /></td>
-                <td className="text-white">
-                  {state != 0 && daysPublic > -1 && hoursPublic  > -1 && minutesPublic  > -1 && secondsPublic  > -1 ? (
-                    <PublicCountdown />
-                  ): "---"}
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </s.Table>
+        <s.Table></s.Table>
+
       </s.FlexContainer>
     </>
   );
