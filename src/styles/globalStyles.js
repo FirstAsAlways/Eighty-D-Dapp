@@ -125,10 +125,11 @@ export const Mint = styled.div`
   padding: 25px 40px;
   border-radius: 25px;
   width: 30%;
-  margin: auto;
+  margin-top: 4vh;
+  margin-right: 4vh;
   /* position: absolute;
   top: 55%; */
-  background: rgba(0,0,0,0.5);
+  background: rgba(0,0,153,0.5);
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 
   @media screen and (max-width: 1024px) {
@@ -150,8 +151,7 @@ export const Mint = styled.div`
 
 export const Table = styled.div`
   display: block;
-  width: 30%;
-  margin: auto;
+  width: 10%;
   @media screen and (max-width: 768px) {
     width: 100%;
     margin-top: 10px !important;
@@ -206,12 +206,12 @@ export const connectButton = styled.button`
 
 export const maxButton = styled.button`
   width: 20%;
-  background: #2ecc71;
+  background: #fff;
   height: 50px;
   border-radius: 10px;
   font-family: "wonder";
   font-size: 1.5rem;
-  color: #fff !important ;
+  color: #000 !important ;
 
   @media screen and (max-width: 768px) {
     position: relative;
@@ -253,8 +253,8 @@ export const NavLink = styled(LinkS)`
 `;
 
 export const Status = styled.button `
-   height: 25px;
-  width: 25px;
+   height: 20px;
+  width: 20px;
   border-radius: 50%;
   display: inline-block;
   background-color: ${({color}) => (color ? color : "#ffffff")};

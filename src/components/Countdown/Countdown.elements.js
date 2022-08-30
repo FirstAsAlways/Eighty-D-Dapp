@@ -44,7 +44,7 @@ export const Count = styled.div`
 `;
 
 export const Digit = styled.div`
-  font-size: 16px;
+  font-size: 12px;
   color: #fff;
 `;
 
