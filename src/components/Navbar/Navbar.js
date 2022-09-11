@@ -2,7 +2,8 @@ import React, { useEffect, useState, useRef } from "react";
 import { connect } from "../../redux/blockchain/blockchainActions";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchData } from "../../redux/data/dataActions";
-import { Link } from "react-scroll";
+import Stake from "../../pages/StakePage/Stake";
+import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import {
   Nav,
   NavLogo,
@@ -104,10 +105,11 @@ const Navbar = () => {
     <>
       <Nav scrollNav={scrollNav}>
         <NavContainer>
-        <NavLink to="">
-                <NavLogo alt={"logo"} src={"config/images/logo.png"} ></NavLogo>
+        <NavLink to="stake">
+               Staking
             </NavLink>
-          
+
+           
 
           {/* <MobileIcon onClick={handleClick}>
             {click ? <FaTimes /> : <FaBars />}

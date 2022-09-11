@@ -12,6 +12,7 @@ import TeamCountdown from "../../components/Countdown/teamCountdown";
 import MasterHunterCountdown from "../../components/Countdown/masterHunterCountdown";
 import StarHunterCountdown from "../../components/Countdown/starHunterCountdown";
 import HunterCountdown from "../../components/Countdown/hunterCountdown";
+import Navbar from "../../components/Navbar/Navbar";
 // Add this import line at the top
 const { createAlchemyWeb3 } = require("@alch/alchemy-web3");
 const web3 = createAlchemyWeb3("https://eth-rinkeby.alchemyapi.io/v2/nZn20L-4EPgloJesoSx35hnTO8cK6c7o");
@@ -258,7 +259,7 @@ function Home() {
 
 
     const abi = await abiResponse.json();
-    var contract = new Contract(abi, '0x9f85344a2985E7d288b11EB6E2BF1b86E7646162');
+    var contract = new Contract(abi, '0x6C4F4442F1B22d94212848E0EB20BcD72D619695');
     contract.setProvider(web3.currentProvider);
     // Get Total Supply
     const totalSupply = await contract.methods
