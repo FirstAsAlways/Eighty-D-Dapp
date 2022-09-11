@@ -17,6 +17,7 @@ function Stake() {
     const [supply, setTotalSupply] = useState(0);
     const [loading, setLoading] = useState(true);
     const [reveal, setReveal] = useState(true);
+    const [stake, setStake] = useState({});
     const [userNFTToken, setuserNFTToken] = useState([]);
     const [CONFIG, SET_CONFIG] = useState({
         CONTRACT_ADDRESS: "",
@@ -86,6 +87,15 @@ function Stake() {
             // Total Claimed API Call
         }
     };
+
+    const stakeNFT = async (tokenId) => {
+        setLoading(true);
+        const staked = await blockchain.smartContract.methods
+        .stake([tokenId])
+        .call();
+        setStake(staked);
+        console.log({staked});
+    }
 
     useEffect(() => {
         getConfig();
@@ -189,18 +199,29 @@ function Stake() {
                                             {reveal ? <s.Image  ></s.Image> :
                                                 <s.Image className="p-3" src={"https://gateway.pinata.cloud/ipfs/QmRNFA8GXxeJ24iTEYJB9JTzd1ZzzcPgX5SstGf5acFnxP"}
                                                     wid={"80"}></s.Image>}
-                                                    
+                                            <div className="d-flex justify-content-center">
+                                                <button className="btn btn-info"
+                                                    onClick={(e) => {
+                                                        e.preventDefault();
+                                                        setTimeout(() => {
+                                                            stakeNFT(nft);
+                                                            setLoading(false);
+                                                        }, 1000);
+                                                    }}
+                                                >Stake</button>
+                                            </div>
+                                            <s.SpacerLarge />
                                         </div>
                                     })
                                 ) : (
                                     <div className="col-md-12">
-                                        <p>You don't have any NFTs Stacked!!!</p>
+                                        <p>You don't have any NFTs For Stacking!!!</p>
                                     </div>
                                 )
                             }
 
                         </div>
-                      
+
                     </>
                 ) : (
                     <>
@@ -218,11 +239,11 @@ function Stake() {
                                 e.preventDefault();
                                 dispatch(connectWallet());
                                 setTimeout(() => {
-                                getData();
-                                setLoading(false);
-                                },2500);
+                                    getData();
+                                    setLoading(false);
+                                }, 2500);
                             }}
-                            wid = {"35%"}
+                            wid={"35%"}
                         >
                             Connect Wallet
                         </s.connectButton>
