@@ -193,7 +193,6 @@ export const FlexItem = styled.div`
 `;
 
 export const connectButton = styled.button`
-  width: 100%;
   padding: 10px;
   background-color: transparent;
   color: var(--primary);
@@ -203,6 +202,11 @@ export const connectButton = styled.button`
   border: 1px solid var(--primary);
   border-radius: 10px;
   cursor: pointer;
+  width: ${({ wid }) => (wid ? wid + "%" : "100%")};
+
+  @media (max-width: 767px) {
+    width: 100%;
+  }
 `;
 
 export const maxButton = styled.button`

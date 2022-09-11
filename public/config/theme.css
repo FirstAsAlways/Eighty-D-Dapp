@@ -99,7 +99,8 @@ body {
 
 
 .jumbotron{
-  background: transparent !important;
+  background: #01014D !important;
+  border-radius: 20px !important;
 }
 
 .card {
@@ -110,4 +111,30 @@ body {
 
 .text-white {
   font-size: 20px !important;
+}
+
+.title {
+  color: #fff;
+  font-size: 28px;
+}
+
+.border{
+  border-radius: 20px;;
+}
+
+.flex-container{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap ;
+  justify-content:center;
+  align-items:center;
+  gap: 10px 20px;
+}
+
+.flex-item{
+  background: #000;
+  padding: 5px;
+  width: 30%;
+
+
 }
