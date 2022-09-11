@@ -17,7 +17,7 @@ function Stake() {
     const [supply, setTotalSupply] = useState(0);
     const [loading, setLoading] = useState(true);
     const [reveal, setReveal] = useState(true);
-    const [stake, setStake] = useState({});
+    const [staked, setStaked] = useState([]);
     const [userNFTToken, setuserNFTToken] = useState([]);
     const [CONFIG, SET_CONFIG] = useState({
         CONTRACT_ADDRESS: "",
@@ -83,18 +83,54 @@ function Stake() {
             const tokenIds = await getUserMintedNFT(totalSupply, blockchain.account);
             setuserNFTToken(tokenIds);
 
+            const stakedIds = [];
+            for (let i = 1; i <= tokenIds.length; i++) {
+                const stakedNFT = await blockchain.smartContract.methods
+                    .vault(i)
+                    .call();
+                if (stakedNFT[1] != '0') {
+                    stakedIds.push(i);
+                }
+            }
+            setStaked(stakedIds);
+            console.log({ staked });
+
+
 
             // Total Claimed API Call
         }
     };
 
     const stakeNFT = async (tokenId) => {
+        let gasLimit = CONFIG.GAS_LIMIT;
+        let totalGasLimit = String(gasLimit * 1);
         setLoading(true);
-        const staked = await blockchain.smartContract.methods
-        .stake([tokenId])
-        .call();
-        setStake(staked);
-        console.log({staked});
+        blockchain.smartContract.methods
+            .stake([tokenId])
+            .send({
+                gasLimit: String(totalGasLimit),
+                to: CONFIG.CONTRACT_ADDRESS,
+                from: blockchain.account
+            })
+            .once("error", (err) => {
+                console.log(err);
+                setLoading(false);
+            })
+            .then((receipt) => {
+                blockchain.smartContract.methods
+                    .totalStaked()
+                    .call()
+                    .then((res) => {
+                        setTotalStaked(res);
+                    });
+                dispatch(fetchData(blockchain.account));
+                getData();
+                setLoading(false);
+            });
+    }
+
+    const unstakeNFT = async (tokenId) => {
+        console.log(tokenId);
     }
 
     useEffect(() => {
@@ -199,17 +235,37 @@ function Stake() {
                                             {reveal ? <s.Image  ></s.Image> :
                                                 <s.Image className="p-3" src={"https://gateway.pinata.cloud/ipfs/QmRNFA8GXxeJ24iTEYJB9JTzd1ZzzcPgX5SstGf5acFnxP"}
                                                     wid={"80"}></s.Image>}
-                                            <div className="d-flex justify-content-center">
-                                                <button className="btn btn-info"
-                                                    onClick={(e) => {
-                                                        e.preventDefault();
-                                                        setTimeout(() => {
-                                                            stakeNFT(nft);
-                                                            setLoading(false);
-                                                        }, 1000);
-                                                    }}
-                                                >Stake</button>
-                                            </div>
+                                            {!staked.includes(nft) ? (
+                                                <div className="d-flex justify-content-center">
+                                                    <button className="btn btn-info"
+                                                        onClick={(e) => {
+                                                            e.preventDefault();
+                                                            setTimeout(() => {
+                                                                stakeNFT(nft);
+                                                                setLoading(false);
+                                                            }, 1000);
+                                                        }}
+                                                    >Stake</button>
+                                                </div>
+                                            ) : (
+                                                <>
+                                                <div className="d-flex justify-content-around">
+                                                        
+                                                </div>
+                                                <div className="d-flex justify-content-around">
+                                                    <button className="btn btn-warning"
+                                                        onClick={(e) => {
+                                                            e.preventDefault();
+                                                            setTimeout(() => {
+                                                                unstakeNFT(nft);
+                                                                setLoading(false);
+                                                            }, 1000);
+                                                        }}
+                                                    >Pay & Claim</button>
+                                                </div>
+                                                </>
+                                            )}
+
                                             <s.SpacerLarge />
                                         </div>
                                     })
