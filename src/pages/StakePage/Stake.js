@@ -4,6 +4,7 @@ import { connectWallet } from "../../redux/blockchain/blockchainActions";
 import { fetchData } from "./../../redux/data/dataActions";
 import * as s from "./../../styles/globalStyles";
 import Loader from "../../components/Loader/loader";
+import PublicCountdown from "../../components/Countdown/publicCountdown";
 const truncate = (input, len) =>
     input.length > len ? `${input.substring(0, len)}...` : input;
 
@@ -158,6 +159,27 @@ function Stake() {
         return tokenIds;
     }
 
+      // Countdown Timer Public
+  let countDownPublic = new Date("Sep 13, 2022 00:00:00 GMT +5:00 ").getTime();
+  let nowPublic = new Date().getTime();
+  let timeleftPublic = countDownPublic - nowPublic;
+  console.log(nowPublic);
+  const [daysPublic, setDaysPublic] = useState();
+  const [hoursPublic, setHourPublic] = useState();
+  const [minutesPublic, setMintPublic] = useState();
+  const [secondsPublic, setSecPublic] = useState();
+  useEffect(() => {
+    const intervalPublic = setInterval(() => {
+      setDaysPublic(Math.floor(timeleftPublic / (1000 * 60 * 60 * 24)));
+      setHourPublic(
+        Math.floor((timeleftPublic % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))
+      );
+      setMintPublic(Math.floor((timeleftPublic % (1000 * 60 * 60)) / (1000 * 60)));
+      setSecPublic(Math.floor((timeleftPublic % (1000 * 60)) / 1000));
+    }, 1000);
+    return () => clearInterval(intervalPublic);
+  }, [daysPublic, hoursPublic, minutesPublic, secondsPublic]);
+
     return (
         <>
             {loading && <Loader />}
@@ -170,7 +192,7 @@ function Stake() {
                     blockchain.smartContract !== null &&
                     blockchain.errorMsg === "" ? (
                     <s.Container ai={"center"} jc={"center"} fd={"row"}>
-                        <div className="btn btn-info btn-lg">
+                        <div className="btn btn-claim btn-lg">
 
                             {truncate(blockchain.account, 15)}
                         </div>
@@ -199,7 +221,7 @@ function Stake() {
                                 <span className="fa fa-hourglass" aria-hidden="true"></span>
                             </div>
                             <div className="text-white text-center mt-3"><h4>Total Claimed</h4></div>
-                            <div className="text-white text-center mt-2"><h1>9332</h1></div>
+                            <div className="text-white text-center mt-2"><h1>0</h1></div>
                         </div>
                     </div>
                     <div className="col-md-4">
@@ -233,11 +255,12 @@ function Stake() {
                                     userNFTToken.map((nft, index) => {
                                         return <div className="flex-item border" key={index}>
                                             {reveal ? <s.Image  ></s.Image> :
-                                                <s.Image className="p-3" src={"https://gateway.pinata.cloud/ipfs/QmRNFA8GXxeJ24iTEYJB9JTzd1ZzzcPgX5SstGf5acFnxP"}
+                                                <s.Image className="p-3" src={"https://gateway.pinata.cloud/ipfs/Qmbd75FH26ihxB8yRJVaV24w9sChkEUY7Nf3iVXugn9r99"}
                                                     wid={"80"}></s.Image>}
                                             {!staked.includes(nft) ? (
+                                                <>
                                                 <div className="d-flex justify-content-center">
-                                                    <button className="btn btn-info"
+                                                    <button className="btn btn-stake"
                                                         onClick={(e) => {
                                                             e.preventDefault();
                                                             setTimeout(() => {
@@ -246,14 +269,18 @@ function Stake() {
                                                             }, 1000);
                                                         }}
                                                     >Stake</button>
+                                                    
                                                 </div>
+                                                <s.SpacerSmall/>
+                                                </>
                                             ) : (
                                                 <>
                                                 <div className="d-flex justify-content-around">
-                                                        
+                                                <PublicCountdown />
                                                 </div>
+                                                <s.SpacerSmall/>
                                                 <div className="d-flex justify-content-around">
-                                                    <button className="btn btn-warning"
+                                                    <button className="btn btn-claim"
                                                         onClick={(e) => {
                                                             e.preventDefault();
                                                             setTimeout(() => {
@@ -271,7 +298,7 @@ function Stake() {
                                     })
                                 ) : (
                                     <div className="col-md-12">
-                                        <p>You don't have any NFTs For Stacking!!!</p>
+                                        <p className="text-white">You don't have any NFTs For Stacking!!!</p>
                                     </div>
                                 )
                             }
@@ -284,11 +311,11 @@ function Stake() {
                         <s.connectButton
                             style={{
                                 textAlign: "center",
-                                color: "#fff",
+                                color: "#01004D",
                                 cursor: "pointer",
                                 margin: "auto",
                                 display: "block",
-                                background: "#17a2b8",
+                                background: "#fff",
                                 border: "#17a2b8"
                             }}
                             onClick={(e) => {

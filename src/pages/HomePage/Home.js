@@ -455,9 +455,10 @@ function Home() {
    }, [daysH, hoursH, minutesH, secondsH]);
 
   // Countdown Timer Public
-  let countDownPublic = new Date("Sep 04, 2022 00:00:00 GMT +5:00 ").getTime();
+  let countDownPublic = new Date("Sep 13, 2022 00:00:00 GMT +5:00 ").getTime();
   let nowPublic = new Date().getTime();
   let timeleftPublic = countDownPublic - nowPublic;
+  console.log(nowPublic);
   const [daysPublic, setDaysPublic] = useState();
   const [hoursPublic, setHourPublic] = useState();
   const [minutesPublic, setMintPublic] = useState();
